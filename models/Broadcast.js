@@ -1,12 +1,15 @@
 const mongoose = require("mongoose");
 
-const BroadcastSchema = new mongoose.Schema({
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-  date: String,
-  time: String,
-  location: String,
-  activity: String,
-  requests: [{ userId: String, status: String }],
+const broadcastSchema = new mongoose.Schema({
+  userId: { type: mongoose.Schema.Types.ObjectId, required: true },
+  date: { type: String, required: true },
+  time: { type: String, required: true },
+  location: { type: String, required: true },
+  activity: { type: String, required: true },
+  requests: { type: Array, default: [] },
+  expiresAt: { type: Date, index: { expires: '1h' } }, // ✅ Broadcast expires after 1 hour
 });
 
-module.exports = mongoose.model("Broadcast", BroadcastSchema);
+const Broadcast = mongoose.model("Broadcast", broadcastSchema);
+
+module.exports = Broadcast;

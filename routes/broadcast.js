@@ -1,9 +1,15 @@
 const express = require("express");
+const authenticateToken = require("../middleware/authMiddleware");
 const Broadcast = require("../models/Broadcast");
+const {
+  getBroadcasts,
+  joinBroadcast,
+} = require("../controllers/broadcastController");
+
 const router = express.Router();
 
-// Create Broadcast
-router.post("/", async (req, res) => {
+// Create Broadcast (Requires Authentication)
+router.post("/", authenticateToken, async (req, res) => {
   try {
     const { userId, date, time, location, activity } = req.body;
     const broadcast = await Broadcast.create({
@@ -13,6 +19,7 @@ router.post("/", async (req, res) => {
       location,
       activity,
       requests: [],
+      expiresAt: new Date(Date.now() + 60 * 60 * 1000), // Expires in 1 hour
     });
     res.json(broadcast);
   } catch (err) {
@@ -20,10 +27,10 @@ router.post("/", async (req, res) => {
   }
 });
 
-// Get All Broadcasts
-router.get("/", async (req, res) => {
-  const broadcasts = await Broadcast.find();
-  res.json(broadcasts);
-});
+// Get All Broadcasts (Requires Authentication)
+router.get("/", authenticateToken, getBroadcasts);
+
+// Join Broadcast (Requires Authentication)
+router.post("/joinBroadcast", authenticateToken, joinBroadcast);
 
 module.exports = router;
