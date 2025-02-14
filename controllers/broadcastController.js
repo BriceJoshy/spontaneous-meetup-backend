@@ -1,4 +1,4 @@
-const redis = require("../redisClient");
+const redis = require("../config/redisClient");
 const Broadcast = require("../models/Broadcast");
 
 // Fetch broadcasts with caching
