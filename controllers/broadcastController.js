@@ -56,7 +56,9 @@ const joinBroadcast = async (req, res) => {
     await broadcast.save();
 
     // 🔹 Publish event to Kafka (if producer is connected)
-    if (producer && producer.isConnected()) {
+    // 🔹 Publish event to Kafka (if producer is available)
+    if (producer) {
+      await producer.connect(); // Ensure producer is connected
       await producer.send({
         topic: "user_joins",
         messages: [{ value: JSON.stringify({ broadcastId, userId }) }],
@@ -65,7 +67,7 @@ const joinBroadcast = async (req, res) => {
         `✅ Kafka Event Sent: User ${userId} joined Broadcast ${broadcastId}`
       );
     } else {
-      console.warn("⚠️ Kafka producer not connected");
+      console.warn("⚠️ Kafka producer not available");
     }
 
     res.status(200).json({ message: "User joined successfully!" });

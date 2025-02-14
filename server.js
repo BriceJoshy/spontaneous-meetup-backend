@@ -8,7 +8,7 @@ const rateLimit = require("express-rate-limit");
 const { initKafka } = require("./notifications_kafkaClient/kafkaClient");
 const runConsumer = require("./notifications_kafkaClient/kafkaConsumer");
 const cleanExpiredBroadcasts = require("./backgroundWorker/cleanupWorker");
-
+const setupSwagger = require("./config/swagger");
 // Authentication routes:
 const authRoutes = require("./routes/auth");
 
@@ -28,6 +28,8 @@ app.use(cors());
 app.use(helmet());
 app.use(morgan("dev"));
 app.use(limiter);
+
+setupSwagger(app); // Initialize Swagger
 
 // Authentication routes:
 app.use("/api/auth", authRoutes);
