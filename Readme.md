@@ -44,7 +44,7 @@ UPSTASH_REDIS_REST_URL=your_redis_url
 UPSTASH_REDIS_REST_TOKEN=your_redis_token  
 ```
 
-**Note:** I have mailed the `.env` file with the cloud URLs if you wish to test it.
+> **Note:** I have mailed the `.env` file with the cloud URLs if you wish to test it.
 
 ### 5️⃣ Start Services
 
