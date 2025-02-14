@@ -1,0 +1,150 @@
+{
+    "info": {
+        "name": "Broadcast API Collection",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Register User",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:5000/api/auth/register",
+                    "host": [
+                        "http://localhost:5000"
+                    ],
+                    "path": [
+                        "api",
+                        "auth",
+                        "register"
+                    ]
+                },
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\"name\": \"John Doe\", \"email\": \"john@example.com\", \"password\": \"password123\"}"
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Login User",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:5000/api/auth/login",
+                    "host": [
+                        "http://localhost:5000"
+                    ],
+                    "path": [
+                        "api",
+                        "auth",
+                        "login"
+                    ]
+                },
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\"email\": \"john@example.com\", \"password\": \"password123\"}"
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Create Broadcast",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    },
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:5000/api/broadcasts",
+                    "host": [
+                        "http://localhost:5000"
+                    ],
+                    "path": [
+                        "api",
+                        "broadcasts"
+                    ]
+                },
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\"userId\": \"{{userId}}\", \"date\": \"2025-02-15\", \"time\": \"14:00\", \"location\": \"Central Park, NY\", \"activity\": \"Football match\"}"
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Join Broadcast",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    },
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:5000/api/broadcasts/joinBroadcast",
+                    "host": [
+                        "http://localhost:5000"
+                    ],
+                    "path": [
+                        "api",
+                        "broadcasts",
+                        "joinBroadcast"
+                    ]
+                },
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\"broadcastId\": \"{{broadcastId}}\", \"userId\": \"{{userId}}\"}"
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Get All Broadcasts",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:5000/api/broadcasts",
+                    "host": [
+                        "http://localhost:5000"
+                    ],
+                    "path": [
+                        "api",
+                        "broadcasts"
+                    ]
+                }
+            },
+            "response": []
+        }
+    ]
+}
