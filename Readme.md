@@ -33,16 +33,20 @@ npm install
 
 ### 4️⃣ Set Up Environment Variables
 
+## Set Up Environment Variables  
+
 Create a `.env` file in the root directory:
 
-```env
-PORT=5000
-MONGO_URI=mongodb://localhost:27017/spontaneous_meetup
-JWT_SECRET=your_secret_key
-KAFKA_BROKER=localhost:9092
-UPSTASH_REDIS_REST_URL=your_redis_url
-UPSTASH_REDIS_REST_TOKEN=your_redis_token
 ```
+PORT=5000  
+MONGO_URI=mongodb://localhost:27017/spontaneous_meetup  
+JWT_SECRET=your_secret_key  
+KAFKA_BROKER=localhost:9092  
+UPSTASH_REDIS_REST_URL=your_redis_url  
+UPSTASH_REDIS_REST_TOKEN=your_redis_token  
+```
+
+**Note:** I have mailed the `.env` file with the cloud URLs if you wish to test it.
 
 ### 5️⃣ Start Services
 
