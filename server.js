@@ -5,6 +5,8 @@ const cors = require("cors");
 const helmet = require("helmet");
 const morgan = require("morgan");
 
+// Authentication routes:
+const authRoutes = require("./routes/auth");
 const app = express();
 
 // Middleware
@@ -13,9 +15,14 @@ app.use(cors());
 app.use(helmet());
 app.use(morgan("dev"));
 
+// Authentication routes:
+app.use("/api/auth", authRoutes);
 // Connect to MongoDB
 mongoose
-  .connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.log(err));
 
