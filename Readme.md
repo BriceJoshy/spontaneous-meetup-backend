@@ -1,158 +1,204 @@
-# Spontaneous Meetup - Backend
+# Spontaneous Meetup Backend
 
-## 📌 Project Overview
-The backend for the **Spontaneous Meetup** application provides APIs for managing broadcasts, user authentication, and event notifications. It uses **Node.js, Express, MongoDB, Kafka, Redis, and Docker** for a scalable and efficient architecture.
+## Project Setup Instructions
 
----
+### Prerequisites
+- Install [Node.js](https://nodejs.org/) (version 18+ recommended)
+- Install [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/)
+- Install [MongoDB](https://www.mongodb.com/atlas/database) or use a cloud database
+- Install [Kafka](https://kafka.apache.org/) (if running locally) or use a managed Kafka service
 
-## 🚀 Project Setup Instructions
-
-### 1️⃣ Prerequisites
-Ensure you have the following installed:
-- **Node.js** (v18+)
-- **MongoDB** (local or cloud instance)
-- **Kafka** (local setup or cloud provider)
-- **Redis** (Upstash or local instance)
-- **Docker** (for containerization)
-
-### 2️⃣ Clone the Repository
-```bash
-git clone https://github.com/your-repo/spontaneous-meetup-backend.git
-cd spontaneous-meetup-backend
-```
-
-### 3️⃣ Install Dependencies
-```bash
-npm install
-```
-
-### 4️⃣ Set Up Environment Variables
-Create a `.env` file in the root directory:
-```env
-PORT=5000
-MONGO_URI=mongodb://localhost:27017/spontaneous_meetup
-JWT_SECRET=your_secret_key
-KAFKA_BROKER=localhost:9092
-UPSTASH_REDIS_REST_URL=your_redis_url
-UPSTASH_REDIS_REST_TOKEN=your_redis_token
-```
-
-### 5️⃣ Start Services
-Start **MongoDB**, **Kafka**, and **Redis** before running the server.
-
-### 6️⃣ Start the Backend Server
-```bash
-npm start
-```
-The backend should now be running on `http://localhost:5000`.
+### Installation Steps
+1. **Clone the repository**
+   ```sh
+   git clone https://github.com/BriceJoshy/spontaneous-meetup-backend.git
+   cd spontaneous-meetup-backend
+   ```
+2. **Create a `.env` file** (Refer to `.env.example` for required variables)
+3. **Install dependencies**
+   ```sh
+   npm install
+   ```
+4. **Start services using Docker Compose**
+   ```sh
+   docker-compose up -d
+   ```
+5. **Run the backend server**
+   ```sh
+   node index.js
+   ```
+6. **Wait for Kafka to connect (approximately 10 seconds)**
 
 ---
 
-## 📂 Monorepo Structure Explanation
+## Monorepo Structure Explanation
 ```
 backend/
-│── backgroundWorker/  # Automated background tasks
-│── config/            # Configuration files (Redis, Swagger, etc.)
-│── controllers/       # API route handlers
-│── middleware/        # Middleware functions (authentication, logging, etc.)
-│── models/           # MongoDB database schemas
-│── notifications_kafkaClient/  # Kafka producer & consumer setup
-│── routes/           # Express API routes
-│── tests/            # Unit and integration tests
-│── Dockerfile        # Docker container configuration
-│── server.js         # Express server entry point
-└── README.md         # Documentation
+│── backgroundWorker/      # Background workers (e.g., cleanup tasks)
+│── config/                # Configuration files (Redis, Swagger, Kafka, etc.)
+│── controllers/           # Route controllers for handling business logic
+│── docker/                # Docker configuration files
+│── middleware/            # Middleware functions (e.g., authentication)
+│── models/                # Mongoose models
+│── notifications_kafkaClient/ # Kafka producer and consumer logic
+│── routes/                # API routes
+│── tests/                 # Unit and integration tests
+│── index.js               # Main entry point of the backend
+│── package.json           # Node.js dependencies and scripts
 ```
 
 ---
 
-## 🔄 CI/CD Pipeline Configuration and Usage Guide
+## CI/CD Pipeline Configuration and Usage Guide
 
-### 🛠️ GitHub Actions Workflow (Example)
-This project can be integrated with GitHub Actions for automated CI/CD.
+- **Automated Tests**: Runs unit and integration tests before deployments.
+- **Docker Build**: The backend is built and pushed to a container registry.
+- **Deployment**: Deploys the latest backend version to the hosting provider.
+- **Environment Variables**: Managed securely in GitHub Actions secrets.
 
-**.github/workflows/deploy.yml:**
+_Example CI/CD pipeline using GitHub Actions:_
 ```yaml
 name: Backend CI/CD
 
-on:
-  push:
-    branches:
-      - main
+on: [push]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Install Dependencies
+      - name: Install dependencies
         run: npm install
-      - name: Run Tests
+      - name: Run tests
         run: npm test
-      - name: Build & Deploy (Docker)
-        run: |
-          docker build -t meetup-backend .
-          docker run -p 5000:5000 meetup-backend
+      - name: Build Docker image
+        run: docker build -t backend-image .
+      - name: Push to Registry
+        run: docker push backend-image
 ```
 
 ---
 
-## 📡 API Integration Details
+## API Integration Details
 
-### 🛠️ Swagger API Documentation
-Once the server is running, access API documentation at:
-```
-http://localhost:5000/api-docs
-```
-
-### 🔹 Sample API Routes
-
-| Method | Endpoint | Description |
-|--------|---------|-------------|
-| GET    | `/broadcasts` | Fetch active broadcasts (Redis Cached) |
-| POST   | `/broadcasts/join` | Join a broadcast |
-| POST   | `/auth/login` | User login |
-| POST   | `/auth/register` | User registration |
-
-Frontend can interact with these endpoints using **REST API calls**.
+- The backend exposes a RESTful API.
+- Uses **Redis caching** to reduce load on MongoDB.
+- Uses **Kafka** for real-time event-driven messaging.
+- Swagger documentation available at `http://localhost:5000/api-docs`
+- [Postman API Collection](https://www.getpostman.com/collections/your-collection-id)
+- [GitHub Repository](https://github.com/BriceJoshy/spontaneous-meetup-backend.git)
 
 ---
 
-## 🧪 Testing Guide
+## API Documentation
 
-### 🏗️ Running Tests
-```bash
-npm test
+### Authentication Endpoints
+
+#### 1. Register User
+**Endpoint:** `POST /api/auth/register`
+
+**Description:** Registers a new user.
+
+**Request Body:**
+```json
+{
+  "name": "John Doe",
+  "email": "johndoe@example.com",
+  "password": "securepassword"
+}
 ```
 
-**Test Structure:**
-- **Unit Tests**: Test individual functions (e.g., controllers, models).
-- **Integration Tests**: Validate API responses using Supertest.
-- **Mocking**: Redis, Kafka, and MongoDB can be mocked for efficient testing.
+**Response:**
+```json
+{
+  "message": "User registered successfully",
+  "userId": "64f8b0c3a5e7e6b8d7c1a9d9",
+  "token": "eyJhbGciOiJIUzI1NiIsIn..."
+}
+```
+
+#### 2. Login User
+**Endpoint:** `POST /api/auth/login`
+
+**Description:** Logs in a user and returns an authentication token.
+
+**Request Body:**
+```json
+{
+  "email": "johndoe@example.com",
+  "password": "securepassword"
+}
+```
+
+**Response:**
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiIsIn...",
+  "userId": "64f8b0c3a5e7e6b8d7c1a9d9"
+}
+```
+
+### Broadcast Endpoints (Requires Authentication)
+
+**Note:**
+- For **broadcast endpoints**, you need to pass the Bearer token in the request headers.
+- After logging in, copy the token and authorize in Swagger UI (top right) before making requests.
+- For joining a broadcast, copy the `broadcastId` from the creation or listing response.
+
+#### 3. Create Broadcast
+**Endpoint:** `POST /api/broadcasts/`
+
+**Headers:**
+```
+Authorization: Bearer <token>
+```
+
+**Description:** Creates a new broadcast.
+
+**Request Body:**
+```json
+{
+  "userId": "64f8b0c3a5e7e6b8d7c1a9d9",
+  "date": "2025-02-15",
+  "time": "14:00",
+  "location": "Central Park, NY",
+  "activity": "Football match"
+}
+```
+
+**Response:**
+```json
+{
+  "_id": "67afb2e452ed0d7a9b469111",
+  "userId": "64f8b0c3a5e7e6b8d7c1a9d9",
+  "date": "2025-02-15",
+  "time": "14:00",
+  "location": "Central Park, NY",
+  "activity": "Football match",
+  "requests": [],
+  "expiresAt": "2025-02-14T22:17:24.233Z",
+  "__v": 0
+}
+```
 
 ---
 
-## 📦 App Distribution Details
+## 🔹 Sample API Routes
 
-### 🚀 Deployment Details
-- **Hosting Provider:** AWS EC2 / DigitalOcean / Railway.app
-- **Deployment Commands:**
-```bash
-# Build Docker Image
-docker build -t meetup-backend .
-
-# Run the container
-docker run -p 5000:5000 meetup-backend
-```
-
-- **Versioning Strategy:**
-  - Use **Git Tags** for releases (e.g., `v1.0.0`).
-  - Follow **Semantic Versioning** (`major.minor.patch`).
+- `POST /api/auth/register` - Register a new user
+- `POST /api/auth/login` - Login user and retrieve token
+- `POST /api/broadcasts/` - Create a new broadcast
+- `GET /api/broadcasts/` - Retrieve all available broadcasts
+- `POST /api/broadcasts/joinBroadcast` - Join an existing broadcast
 
 ---
 
-## 🎯 Conclusion
-This backend powers the **Spontaneous Meetup** app by providing a scalable, event-driven architecture. It efficiently manages user broadcasts, caching, real-time messaging, and background job processing.
+## Conclusion
 
-For further development or contributions, feel free to submit PRs or issues!
+The **Spontaneous Meetup Backend** provides a robust API for managing spontaneous social meetups with authentication, real-time event messaging, and efficient database caching. The system is built using modern technologies, ensuring scalability and performance. This documentation serves as a guide for setup, API usage, and CI/CD deployment, enabling seamless integration and development.
+
+For detailed API testing, refer to:
+- [Swagger API Docs](http://localhost:5000/api-docs)
+- [Postman API Collection](https://www.getpostman.com/collections/your-collection-id)
+- [GitHub Repository](https://github.com/BriceJoshy/spontaneous-meetup-backend.git)
 
