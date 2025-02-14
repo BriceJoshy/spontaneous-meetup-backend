@@ -1,13 +1,18 @@
-const Redis = require("ioredis");
+// config/redisClient.js
+const { Redis } = require("@upstash/redis");
 
 const redis = new Redis({
-  host: "127.0.0.1",
-  port: 6379,
-  maxRetriesPerRequest: null, // ✅ Required for BullMQ
+  url: process.env.UPSTASH_REDIS_REST_URL,
+  token: process.env.UPSTASH_REDIS_REST_TOKEN,
 });
-redis.on("connect", () => console.log("✅ Redis Connected!"));
-redis.on("error", (err) => {
-  console.error("Redis Error:", err);
-});
+
+(async () => {
+  try {
+    await redis.set("test", "Hello, Upstash!"); // Test connection
+    console.log("✅ Redis Connected & Test Key Set!");
+  } catch (error) {
+    console.error("❌ Redis Connection Error:", error);
+  }
+})();
 
 module.exports = redis;
