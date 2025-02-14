@@ -318,6 +318,6 @@ This backend powers the Spontaneous Meetup app by providing a scalable, event-dr
 
 📌 API Documentation:
 
-API Doc : [Link to Swagger Docs](https://github.com/BriceJoshy/spontaneous-meetup-backend/blob/main/API.md)
-Postman Collection: [Download Postman JSON](https://github.com/BriceJoshy/spontaneous-meetup-backend/blob/main/Broadcast_API_Collection.json)
+- **API Doc** : [Link to Swagger Docs](https://github.com/BriceJoshy/spontaneous-meetup-backend/blob/main/API.md)
+- **Postman Collection** : [Download Postman JSON](https://github.com/BriceJoshy/spontaneous-meetup-backend/blob/main/Broadcast_API_Collection.json)
 For further development or contributions, feel free to submit PRs or issues!
