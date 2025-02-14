@@ -1,5 +1,5 @@
-const Broadcast = require("../models/broadcastModel");
-const { producer } = require("../kafkaClient");
+const Broadcast = require("../models/Broadcast");
+const { producer } = require("../notifications_kafkaClient/kafkaClient");
 
 const cleanExpiredBroadcasts = async () => {
   const now = Date.now();

@@ -7,6 +7,7 @@ const morgan = require("morgan");
 const rateLimit = require("express-rate-limit");
 const { initKafka } = require("./notifications_kafkaClient/kafkaClient");
 const runConsumer = require("./notifications_kafkaClient/kafkaConsumer");
+const cleanExpiredBroadcasts = require("./backgroundWorker/cleanupWorker");
 
 // Authentication routes:
 const authRoutes = require("./routes/auth");
@@ -47,10 +48,9 @@ app.get("/", (req, res) => {
   res.send("Spontaneous Meetup API is running...");
 });
 
-// 🔹 Start Kafka Producer & Consumer
-initKafka();
-runConsumer();
-
+initKafka(); // 🔹 Connect Kafka
+runConsumer(); // 🔹 Start Kafka Consumer
+cleanExpiredBroadcasts(); // 🔹 Run Cleanup Worker
 // Start server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
