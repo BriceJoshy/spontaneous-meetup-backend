@@ -320,7 +320,7 @@ This backend powers the **Spontaneous Meetup** app by providing a scalable, even
 
 📌 **API Documentation**:  
 - API Doc: [https://github.com/BriceJoshy/spontaneous-meetup-backend/blob/main/API.md](#)  
-- Postman Collection: [[Download Postman JSON](https://github.com/BriceJoshy/spontaneous-meetup-backend/blob/main/Broadcast_API_Collection.json)](#)  
+- Postman Collection: [Download Postman JSON](https://github.com/BriceJoshy/spontaneous-meetup-backend/blob/main/Broadcast_API_Collection.json)
 
 For further development or contributions, feel free to submit PRs or issues!  
 
