@@ -124,12 +124,14 @@ Once the server is running, access API documentation at:
 
 ## API Endpoints
 
-| Method | Endpoint           | Description                            |
-| ------ | ------------------ | -------------------------------------- |
-| GET    | `/broadcasts`      | Fetch active broadcasts (Redis Cached) |
-| POST   | `/broadcasts/join` | Join a broadcast                       |
-| POST   | `/auth/login`      | User login                             |
-| POST   | `/auth/register`   | User registration                      |
+Here's the corrected table with proper endpoints:  
+
+| Method | Endpoint               | Description                            |
+|--------|------------------------|----------------------------------------|
+| GET    | `/api/broadcasts`      | Fetch active broadcasts (Redis Cached) |
+| POST   | `/api/broadcasts/join` | Join a broadcast                       |
+| POST   | `/api/auth/login`      | User login                             |
+| POST   | `/api/auth/register`   | User registration                      |
 
 ## Authentication Endpoints
 
