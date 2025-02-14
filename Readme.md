@@ -308,29 +308,20 @@ npm test
 
 ---
 
-## 📦 App Distribution Details
-
-### 🚀 Deployment Details
-
-- **Hosting Provider:** AWS EC2 / DigitalOcean / Railway.app
-- **Deployment Commands:**
-
-```bash
-# Build Docker Image
-docker build -t meetup-backend .
-
-# Run the container
-docker run -p 5000:5000 meetup-backend
-```
-
 - **Versioning Strategy:**
   - Use **Git Tags** for releases (e.g., `v1.0.0`).
   - Follow **Semantic Versioning** (`major.minor.patch`).
 
 ---
 
-## 🎯 Conclusion
+## 🎯 Conclusion  
 
-This backend powers the **Spontaneous Meetup** app by providing a scalable, event-driven architecture. It efficiently manages user broadcasts, caching, real-time messaging, and background job processing.
+This backend powers the **Spontaneous Meetup** app by providing a scalable, event-driven architecture. It efficiently manages user broadcasts, caching, real-time messaging, and background job processing.  
 
-For further development or contributions, feel free to submit PRs or issues!
+📌 **API Documentation**:  
+- API Doc: [https://github.com/BriceJoshy/spontaneous-meetup-backend/blob/main/API.md](#)  
+- Postman Collection: [[Download Postman JSON](https://github.com/BriceJoshy/spontaneous-meetup-backend/blob/main/Broadcast_API_Collection.json)](#)  
+
+For further development or contributions, feel free to submit PRs or issues!  
+
+*(Replace `#` with actual links to your Swagger documentation and Postman collection.)*
