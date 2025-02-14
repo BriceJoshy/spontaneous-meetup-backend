@@ -33,12 +33,19 @@ const getBroadcasts = async (req, res) => {
 const joinBroadcast = async (req, res) => {
   try {
     const { broadcastId, userId } = req.body;
+    const broadcast = await Broadcast.findById(broadcastId);
+    if (!broadcast)
+      return res.status(404).json({ message: "Broadcast not found" });
 
-    await requestQueue.add("joinRequest", { broadcastId, userId });
+    // 🔹 Publish event to Kafka
+    await producer.send({
+      topic: "user_joins",
+      messages: [{ value: JSON.stringify({ broadcastId, userId }) }],
+    });
 
-    res.json({ message: "Request added to queue!" });
+    res.status(200).json({ message: "User joined successfully!" });
   } catch (error) {
-    res.status(500).json({ message: "Error processing request", error });
+    res.status(500).json({ message: "Error joining broadcast", error });
   }
 };
 

@@ -5,6 +5,8 @@ const cors = require("cors");
 const helmet = require("helmet");
 const morgan = require("morgan");
 const rateLimit = require("express-rate-limit");
+const { initKafka } = require("./notifications_kafkaClient/kafkaClient");
+const runConsumer = require("./notifications_kafkaClient/kafkaConsumer");
 
 // Authentication routes:
 const authRoutes = require("./routes/auth");
@@ -44,6 +46,10 @@ mongoose
 app.get("/", (req, res) => {
   res.send("Spontaneous Meetup API is running...");
 });
+
+// 🔹 Start Kafka Producer & Consumer
+initKafka();
+runConsumer();
 
 // Start server
 const PORT = process.env.PORT || 5000;

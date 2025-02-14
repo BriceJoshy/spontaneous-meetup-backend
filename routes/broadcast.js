@@ -5,6 +5,7 @@ const {
   getBroadcasts,
   joinBroadcast,
 } = require("../controllers/broadcastController");
+const { producer } = require("../notifications_kafkaClient/kafkaClient");
 
 const router = express.Router();
 
@@ -21,6 +22,13 @@ router.post("/", authenticateToken, async (req, res) => {
       requests: [],
       expiresAt: new Date(Date.now() + 60 * 60 * 1000), // Expires in 1 hour
     });
+
+    // 🔹 Send Kafka event
+    await producer.send({
+      topic: "broadcast_notifications",
+      messages: [{ value: JSON.stringify(broadcast) }],
+    });
+
     res.json(broadcast);
   } catch (err) {
     res.status(400).json({ error: err.message });
