@@ -7,6 +7,9 @@ const morgan = require("morgan");
 
 // Authentication routes:
 const authRoutes = require("./routes/auth");
+
+// Broadcast routes:
+const broadcastRoutes = require("./routes/broadcast");
 const app = express();
 
 // Middleware
@@ -17,6 +20,9 @@ app.use(morgan("dev"));
 
 // Authentication routes:
 app.use("/api/auth", authRoutes);
+
+// Broadcast routes:
+app.use("/api/broadcasts", broadcastRoutes);
 // Connect to MongoDB
 mongoose
   .connect(process.env.MONGO_URI, {
