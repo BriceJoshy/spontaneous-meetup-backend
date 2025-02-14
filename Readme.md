@@ -33,8 +33,6 @@ npm install
 
 ### 4️⃣ Set Up Environment Variables
 
-## Set Up Environment Variables  
-
 Create a `.env` file in the root directory:
 
 ```
