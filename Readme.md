@@ -25,11 +25,12 @@ git clone https://github.com/your-repo/spontaneous-meetup-backend.git
 cd spontaneous-meetup-backend
 ```
 
-### 3️⃣ Install Dependencies
+### **3️⃣ Install Dependencies**  
 
 ```bash
 npm install
 ```
+
 
 ### 4️⃣ Set Up Environment Variables
 
@@ -52,8 +53,14 @@ Start **MongoDB**, **Kafka**, and **Redis** before running the server.
 
 ### 6️⃣ Start the Backend Server
 
+Using **Docker Compose**:  
 ```bash
-npm start
+docker-compose up --build
+```
+
+Or manually start the server:  
+```bash
+node index.js
 ```
 
 The backend should now be running on `http://localhost:5000`.
